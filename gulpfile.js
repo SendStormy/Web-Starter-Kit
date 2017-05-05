@@ -3,8 +3,8 @@ var gulp 			= require('gulp'), // Connect Gulp
 		rename		=	require('gulp-rename'), // Rename our Css
 		notify		=	require('gulp-notify'), // Makes beautifull notifications
 		prefix		=	require('gulp-autoprefixer'), // Puts autoprefix to css properties
-		minifyCSS = require('gulp-minify-css'),
-		sass			= require('gulp-sass'); // Minimize Css
+		minifyCSS = require('gulp-minify-css'), // Minimize Css
+		sass			= require('gulp-sass'); 
  
 gulp.task('default', function () {
   gulp.src('app/css/*.css') // Collecting all Css
