@@ -1,0 +1,34 @@
+body {
+	overflow-x: hidden;
+	margin: 0;
+	padding: 0;
+	background: linear-gradient(45deg, #ccc, #666);
+}
+
+* {
+	box-sizing: border-box;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+ul li {
+	list-style: none;
+}
+
+p {
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	outline: none;
+	text-decoration: none;
+}
+
+p {
+	border-radius: 100%;
+}
+
