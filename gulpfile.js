@@ -4,14 +4,15 @@ var gulp 				= require('gulp'), // Connect Gulp
 		rename			=	require('gulp-rename'), // Rename our Css
 		notify			=	require('gulp-notify'), // Makes beautifull notifications
 		prefix			=	require('gulp-autoprefixer'), // Puts autoprefix to css properties
+		sass				=	 require('gulp-sass'), // Installing Sass
 		minifyCSS 	= require('gulp-minify-css'); // Minimize Css
  
 gulp.task('default', function () {
-  gulp.src('app/css/*.css') // Collecting all Css
-    .pipe(concatCSS("css/bundle.css")) // Merge all Css to one
+  gulp.src('app/sass/**/*.sass') // Collecting all Sass files
+    .pipe(sass().on('error', sass.logError))
     .pipe(prefix(['last 15 versions', '>1%', 'ie 8', 'ie 7'])) // Adding vendor prefixes
     .pipe(minifyCSS('')) // Compressing Css
-    .pipe(rename('bundle.min.css')) // Rename our Css
+    .pipe(rename('style.min.css')) // Rename our Css
     .pipe(gulp.dest('app/css')) // Unload Css
     .pipe(browserSync.reload({stream: true})) // Add automatic reload
     .pipe(notify('Done!')); // If success alert Done!
