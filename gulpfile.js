@@ -60,6 +60,23 @@ gulp.task('clean', function() {
 	return del.sync('dist'); // Removing Dist folder before assembly
 });
 
+gulp.task('build', ['clean'], function() {
+	var buildCss = gulp.src([ // Transfering all CSS into dist folder
+			'app/css/style.min.css', // All dev Css
+			'app/css/libs.min.css' // All libs Css
+		])
+		.pipe(gulp.dest('dist/css')) // Pipe for dest
+
+	var buildFonts = gulp.src('app/fonts/**/*') // Transfering all fonts into dist folder
+		.pipe(gulp.dest('dist/fonts')) // Pipe for dest
+
+	var buildJs = gulp.src('app/js/**/*') // Transfering all Js into dist folder
+		.pipe(gulp.dest('dist/js')) // Pipe for dest
+
+	var buildHTML = gulp.src('app/*.html') // Transfering all HTML into dist folder
+		.pipe(gulp.dest('dist')); // Pipe for dest
+});
+
 gulp.task('watch', ['browser-sync'], function () {
 	gulp.watch('app//sass/**/*.sass', ['sass']) // Start to watch for changes in .css
 	gulp.watch('app/*.html', browserSync.reload) // Start to watch for changes in .html
