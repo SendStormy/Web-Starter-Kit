@@ -12,6 +12,7 @@ var gulp 				= require('gulp'), // Connect Gulp
 		notify			=	require('gulp-notify'), // Makes beautifull notifications
 		prefix			=	require('gulp-autoprefixer'), // Puts autoprefix to css properties
 		sass				=	require('gulp-sass'), // Installing Sass
+		bourbon			=	require('node-bourbon'), // Adding bourbon mixins
 		minifyCSS 	= require('gulp-minify-css'), // Minimize Css
 		htmlmin			= require('gulp-htmlmin'), // Minimize Html
 		imagemin		=	require('gulp-imagemin'); // Minimize img
@@ -20,7 +21,7 @@ var gulp 				= require('gulp'), // Connect Gulp
 // Developing 
 gulp.task('sass', function() {
   gulp.src('app/sass/**/*.sass') // Collecting all Sass files
-    .pipe(sass()) // Launch Sass
+    .pipe(sass({includePaths: require('node-bourbon').includePaths})) // Launch Sass
     .on('error', function (error) { // Event on error
     	console.log(error); // Output errors into console
     	this.end(); // Looping action
@@ -81,9 +82,15 @@ gulp.task('clear', function() {
 gulp.task('htmlmin', function() {
 	return gulp.src('app/*.html') // Search all Html files
 		.pipe(htmlmin({
-			collapseWhitespace: true, 
-			collapseInlineTagWhitespace: true, 
-			conservativeCollapse: true
+			removeComments: true,
+      collapseWhitespace: true,
+      collapseBooleanAttributes: true,
+      removeAttributeQuotes: true,
+      removeRedundantAttributes: true,
+      removeEmptyAttributes: true,
+      removeScriptTypeAttributes: true,
+      removeStyleLinkTypeAttributes: true,
+      removeOptionalTags: true
 		})) // Compressing Html files
 		.pipe(gulp.dest('dist')); // Transfering all HTML into dist folder
 });
@@ -120,4 +127,5 @@ gulp.task('watch', ['browser-sync'], function () {
 	gulp.watch('app//sass/**/*.sass', ['sass']) // Start to watch for changes in .css
 	gulp.watch('app/*.html', browserSync.reload) // Start to watch for changes in .html
 	gulp.watch('app/js/**/*.js', browserSync.reload) // Start to watch for changes in .js
+	gulp.watch('app/img/**/*', browserSync.reload) // Start to watch for changes in img folder
 });
