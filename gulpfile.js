@@ -15,7 +15,7 @@ var gulp 				= require('gulp'), // Connect Gulp
 		minifyCSS 	= require('gulp-minify-css'); // Minimize Css
 
 // Developing 
-gulp.task('sass', function () {
+gulp.task('sass', function() {
   gulp.src('app/sass/**/*.sass') // Collecting all Sass files
     .pipe(sass()) // Launch Sass
     .on('error', function (error) { // Event on error
@@ -33,8 +33,8 @@ gulp.task('sass', function () {
     .pipe(notify('Done!')); // If success alert Done!
 });
 
-gulp.task('scripts', function () {
-	return gulp.src([ // Collecting all libs
+gulp.task('scripts', function() {
+	return gulp.src([ // Collecting Js all libs
 			'app/libs/jquery/jquery-1.11.1.min.js', // Jquery
 			'app/libs/jquery-mousewheel/jquery.mousewheel.min.js', // Mousewheel
 			'app/libs/html5shiv/html5shiv.min.js', // html5shiv
@@ -42,9 +42,19 @@ gulp.task('scripts', function () {
 			'app/libs/respond/respond.min.js', // Respond
 			'app/libs/waypoints/waypoints-1.6.2.min.js', // Waypoints
 		])
-	.pipe(concat('libs.min.js')) // Collecting all libs in new file libs.min.js
+	.pipe(concat('libs.min.js')) // Collecting all Js libs in new file libs.min.js
 	.pipe(uglify()) // Minimize Js
-	.pipe(gulp.dest('app/js')); // Upload to folder app/js
+	.pipe(gulp.dest('app/js')); // Deploy in folder app/js
+});
+
+gulp.task('css-libs', function() {
+	return gulp.src([ // Collecting Css libs
+			'app/css/bootstrap.min.css', // Bootstrap
+			'app/css/font-awesome.min.css', // Font Awesome
+		])
+	.pipe(concat('libs.min.css')) // Collecting all Css libs in new file libs.min.css
+	.pipe(minifyCSS('')) // Compressing Css
+	.pipe(gulp.dest('app/css')) // Deploy in folder app/css
 });
 
 gulp.task('browser-sync', function() { // Create task for browser-sync
@@ -62,7 +72,7 @@ gulp.task('clean', function() {
 });
 
 gulp.task('build', ['clean'], function() {
-	var buildCss = gulp.src([ // Transfering all CSS into dist folder
+	var buildCss = gulp.src([ // Transfering selected CSS into dist folder
 			'app/css/style.min.css', // All dev Css
 			'app/css/libs.min.css' // All libs Css
 		])
