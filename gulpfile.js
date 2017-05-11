@@ -8,6 +8,7 @@ var gulp 				= require('gulp'), // Connect Gulp
 		uglify			=	require('gulp-uglify'), // Minimize Js
 		rename			=	require('gulp-rename'), // Rename our Css
 		del 				=	require('del'), // Library for removing files and folders
+		cache				=	require('gulp-cache'), // Connecting library for caching
 		notify			=	require('gulp-notify'), // Makes beautifull notifications
 		prefix			=	require('gulp-autoprefixer'), // Puts autoprefix to css properties
 		sass				=	require('gulp-sass'), // Installing Sass
