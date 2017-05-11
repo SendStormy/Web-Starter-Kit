@@ -12,7 +12,9 @@ var gulp 				= require('gulp'), // Connect Gulp
 		notify			=	require('gulp-notify'), // Makes beautifull notifications
 		prefix			=	require('gulp-autoprefixer'), // Puts autoprefix to css properties
 		sass				=	require('gulp-sass'), // Installing Sass
-		minifyCSS 	= require('gulp-minify-css'); // Minimize Css
+		minifyCSS 	= require('gulp-minify-css'), // Minimize Css
+		htmlmin			= require('gulp-htmlmin'); // Minimize Html
+
 
 // Developing 
 gulp.task('sass', function() {
@@ -69,6 +71,12 @@ gulp.task('browser-sync', function() { // Create task for browser-sync
 // Production
 gulp.task('clean', function() {
 	return del.sync('dist'); // Removing Dist folder before assembly
+});
+
+gulp.task('htmlmin', function() {
+	return gulp.src('app/*.html') // Search all Html files
+		.pipe(htmlmin({collapseWhitespace: true, collapseInlineTagWhitespace: true, conservativeCollapse: true})) // Compressing Html files
+		.pipe(gulp.dest('dist')); // Transfering all HTML into dist folder
 });
 
 gulp.task('build', ['clean'], function() {
