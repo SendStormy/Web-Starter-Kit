@@ -13,7 +13,8 @@ var gulp 				= require('gulp'), // Connect Gulp
 		prefix			=	require('gulp-autoprefixer'), // Puts autoprefix to css properties
 		sass				=	require('gulp-sass'), // Installing Sass
 		minifyCSS 	= require('gulp-minify-css'), // Minimize Css
-		htmlmin			= require('gulp-htmlmin'); // Minimize Html
+		htmlmin			= require('gulp-htmlmin'), // Minimize Html
+		imagemin		=	require('gulp-imagemin'); // Minimize img
 
 
 // Developing 
@@ -73,11 +74,30 @@ gulp.task('clean', function() {
 	return del.sync('dist'); // Removing Dist folder before assembly
 });
 
+gulp.task('clear', function() {
+	return cache.clearAll();
+});
+
 gulp.task('htmlmin', function() {
 	return gulp.src('app/*.html') // Search all Html files
-		.pipe(htmlmin({collapseWhitespace: true, collapseInlineTagWhitespace: true, conservativeCollapse: true})) // Compressing Html files
+		.pipe(htmlmin({
+			collapseWhitespace: true, 
+			collapseInlineTagWhitespace: true, 
+			conservativeCollapse: true
+		})) // Compressing Html files
 		.pipe(gulp.dest('dist')); // Transfering all HTML into dist folder
 });
+
+gulp.task('imgmin', () =>
+	gulp.src('app/img/**/*') // Collecting all the imgmin
+		.pipe(cache(imagemin([
+    	imagemin.gifsicle({interlaced: true}),
+    	imagemin.jpegtran({progressive: true}),
+    	imagemin.optipng({optimizationLevel: 5}),
+    	imagemin.svgo({plugins: [{removeViewBox: true}]})
+		])))
+		.pipe(gulp.dest('dist/img'))
+);
 
 gulp.task('build', ['clean'], function() {
 	var buildCss = gulp.src([ // Transfering selected CSS into dist folder
