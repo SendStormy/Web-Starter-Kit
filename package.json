@@ -1,11 +1,22 @@
 {
-  "name": "Web Starter Kit",
-  "version": "0.1",
+  "name": "web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SendStormy/Web-Starter-Kit.git"
+  },
+  "author": "Polovinchenko Dmitry",
+  "license": "ISC",
   "devDependencies": {
     "browser-sync": "^2.18.8",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^3.1.1",
+    "gulp-autoprefixer": "^4.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-concat-css": "^2.3.0",
     "gulp-minify-css": "^1.2.4",
@@ -14,5 +25,9 @@
     "gulp-sass": "^3.1.0",
     "gulp-uglify": "^2.1.2",
     "gulp-uncss": "^1.0.6"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/SendStormy/Web-Starter-Kit/issues"
+  },
+  "homepage": "https://github.com/SendStormy/Web-Starter-Kit#readme"
 }
