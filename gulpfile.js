@@ -17,7 +17,6 @@ var gulp 				= require('gulp'), // Connect Gulp
 		htmlmin			= require('gulp-htmlmin'), // Minimize Html
 		imagemin		=	require('gulp-imagemin'); // Minimize img
 
-
 // Developing 
 gulp.task('sass', function() {
   gulp.src('app/sass/**/*.sass') // Collecting all Sass files
@@ -34,12 +33,11 @@ gulp.task('sass', function() {
     }))
     .pipe(gulp.dest('app/css')) // Unload Css
     .pipe(browserSync.reload({stream: true})) // Add automatic reload
-    .pipe(notify('Done!')); // If success alert Done!
 });
 
 gulp.task('scripts', function() {
 	return gulp.src([ // Collecting Js all libs
-			'app/libs/jquery/jquery-1.11.1.min.js', // Jquery
+			'app/libs/jquery/dist/jquery.min.js', // Jquery
 			'app/libs/jquery-mousewheel/jquery.mousewheel.min.js', // Mousewheel
 			'app/libs/html5shiv/html5shiv.min.js', // html5shiv
 			'app/libs/owl-carousel/owl.carousel.min.js', // Carusel
@@ -49,6 +47,14 @@ gulp.task('scripts', function() {
 	.pipe(concat('libs.min.js')) // Collecting all Js libs in new file libs.min.js
 	.pipe(uglify()) // Minimize Js
 	.pipe(gulp.dest('app/js')); // Deploy in folder app/js
+});
+
+gulp.task('compress', function() {
+	return gulp.src('app/js/common.js') // Collecting custom script
+		.pipe(rename('common.min.js')) // Create new renamed file with custom Js
+		.pipe(uglify()) // Minimize custom Js
+		.pipe(gulp.dest('app/js')) // Deploy custom js in folder app/js
+		.pipe(browserSync.reload({stream: true})); // Add automatic reload
 });
 
 gulp.task('css-libs', function() {
@@ -70,13 +76,19 @@ gulp.task('browser-sync', function() { // Create task for browser-sync
     });
 });
 
+gulp.task('watch', ['browser-sync', 'css-libs', 'scripts', 'compress'], function () {
+	gulp.watch('app//sass/**/*.sass', ['sass']) // Start to watch for changes in .css
+	gulp.watch('app/*.html', browserSync.reload) // Start to watch for changes in .html
+	gulp.watch('app/js/**/*.js', ['compress']) // Start to watch for changes in .js
+	gulp.watch('app/img/**/*', browserSync.reload) // Start to watch for changes in img folder
+	.pipe(notify('Done!')); // If success alert Done!
+});
+
+gulp.task('default', ['watch']);
+
 // Production
 gulp.task('clean', function() {
 	return del.sync('dist'); // Removing Dist folder before assembly
-});
-
-gulp.task('clear', function() {
-	return cache.clearAll();
 });
 
 gulp.task('htmlmin', function() {
@@ -106,7 +118,7 @@ gulp.task('imgmin', () =>
 		.pipe(gulp.dest('dist/img'))
 );
 
-gulp.task('build', ['clean'], function() {
+gulp.task('build', ['clean', 'imgmin', 'htmlmin'], function() {
 	var buildCss = gulp.src([ // Transfering selected CSS into dist folder
 			'app/css/style.min.css', // All dev Css
 			'app/css/libs.min.css' // All libs Css
@@ -116,16 +128,14 @@ gulp.task('build', ['clean'], function() {
 	var buildFonts = gulp.src('app/fonts/**/*') // Transfering all fonts into dist folder
 		.pipe(gulp.dest('dist/fonts')) // Pipe for dest
 
-	var buildJs = gulp.src('app/js/**/*') // Transfering all Js into dist folder
+	var buildJs = gulp.src([
+			'app/js/libs.min.js', // Add libs Js
+			'app/js/common.min.js' // Custom Js
+		]) // Transfering all Js into dist folder
 		.pipe(gulp.dest('dist/js')) // Pipe for dest
-
-	var buildHTML = gulp.src('app/*.html') // Transfering all HTML into dist folder
-		.pipe(gulp.dest('dist')); // Pipe for dest
 });
 
-gulp.task('watch', ['browser-sync'], function () {
-	gulp.watch('app//sass/**/*.sass', ['sass']) // Start to watch for changes in .css
-	gulp.watch('app/*.html', browserSync.reload) // Start to watch for changes in .html
-	gulp.watch('app/js/**/*.js', browserSync.reload) // Start to watch for changes in .js
-	gulp.watch('app/img/**/*', browserSync.reload) // Start to watch for changes in img folder
+// Clean cache
+gulp.task('clear', function() {
+	return cache.clearAll();
 });
