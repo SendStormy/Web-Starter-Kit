@@ -35,6 +35,7 @@ gulp.task('sass', function() {
 gulp.task('scripts', function() {
 	return gulp.src([ // Collecting Js all libs
 			'app/libs/jquery/dist/jquery.min.js', // Jquery
+			'app/libs/bootstrap/dist/js/bootstrap.min.js', // Bootstrap Js
 			'app/libs/html5shiv/html5shiv.min.js', // html5shiv
 		])
 	.pipe(concat('libs.min.js')) // Collecting all Js libs in new file libs.min.js
@@ -52,7 +53,7 @@ gulp.task('compress', function() {
 
 gulp.task('css-libs', function() {
 	return gulp.src([ // Collecting Css libs
-			'app/css', // First lib css
+			'app/libs/bootstrap/dist/css/bootstrap.min.css', // Add bootstrap
 			'app/css', // Second lib css
 		])
 	.pipe(concat('libs.min.css')) // Collecting all Css libs in new file libs.min.css
