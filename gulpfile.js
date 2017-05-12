@@ -28,9 +28,6 @@ gulp.task('sass', function() {
     .pipe(prefix(['last 15 versions', '>1%', 'ie 8', 'ie 7'])) // Adding vendor prefixes
     .pipe(minifyCSS('')) // Compressing Css
     .pipe(rename('style.min.css')) // Rename our Css
-    .pipe(uncss({
-    		html: ['app/index.html'] // Remove useless css from project
-    }))
     .pipe(gulp.dest('app/css')) // Unload Css
     .pipe(browserSync.reload({stream: true})) // Add automatic reload
 });
@@ -38,11 +35,7 @@ gulp.task('sass', function() {
 gulp.task('scripts', function() {
 	return gulp.src([ // Collecting Js all libs
 			'app/libs/jquery/dist/jquery.min.js', // Jquery
-			'app/libs/jquery-mousewheel/jquery.mousewheel.min.js', // Mousewheel
 			'app/libs/html5shiv/html5shiv.min.js', // html5shiv
-			'app/libs/owl-carousel/owl.carousel.min.js', // Carusel
-			'app/libs/respond/respond.min.js', // Respond
-			'app/libs/waypoints/waypoints-1.6.2.min.js', // Waypoints
 		])
 	.pipe(concat('libs.min.js')) // Collecting all Js libs in new file libs.min.js
 	.pipe(uglify()) // Minimize Js
@@ -54,13 +47,13 @@ gulp.task('compress', function() {
 		.pipe(rename('common.min.js')) // Create new renamed file with custom Js
 		.pipe(uglify()) // Minimize custom Js
 		.pipe(gulp.dest('app/js')) // Deploy custom js in folder app/js
-		.pipe(browserSync.reload({stream: true})); // Add automatic reload
+		.pipe(browserSync.reload({stream: true})) // Add automatic reload
 });
 
 gulp.task('css-libs', function() {
 	return gulp.src([ // Collecting Css libs
-			'app/css/bootstrap.min.css', // Bootstrap
-			'app/css/font-awesome.min.css', // Font Awesome
+			'app/css/', // First lib css
+			'app/css/', // Second lib css
 		])
 	.pipe(concat('libs.min.css')) // Collecting all Css libs in new file libs.min.css
 	.pipe(minifyCSS('')) // Compressing Css
@@ -81,7 +74,6 @@ gulp.task('watch', ['browser-sync', 'css-libs', 'scripts', 'compress'], function
 	gulp.watch('app/*.html', browserSync.reload) // Start to watch for changes in .html
 	gulp.watch('app/js/**/*.js', ['compress']) // Start to watch for changes in .js
 	gulp.watch('app/img/**/*', browserSync.reload) // Start to watch for changes in img folder
-	.pipe(notify('Done!')); // If success alert Done!
 });
 
 gulp.task('default', ['watch']);
@@ -112,7 +104,7 @@ gulp.task('imgmin', () =>
 		.pipe(cache(imagemin([
     	imagemin.gifsicle({interlaced: true}),
     	imagemin.jpegtran({progressive: true}),
-    	imagemin.optipng({optimizationLevel: 5}),
+    	imagemin.optipng({optimizationLevel: 3}),
     	imagemin.svgo({plugins: [{removeViewBox: true}]})
 		])))
 		.pipe(gulp.dest('dist/img'))
@@ -123,6 +115,9 @@ gulp.task('build', ['clean', 'imgmin', 'htmlmin'], function() {
 			'app/css/style.min.css', // All dev Css
 			'app/css/libs.min.css' // All libs Css
 		])
+		.pipe(uncss({
+    		html: ['app/index.html'] // Remove useless css from project
+    }))
 		.pipe(gulp.dest('dist/css')) // Pipe for dest
 
 	var buildFonts = gulp.src('app/fonts/**/*') // Transfering all fonts into dist folder
