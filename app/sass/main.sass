@@ -1,48 +1,42 @@
+@import "fonts"
+@import "libs"
+@import "vars"
+
+*::-webkit-input-placeholder
+	color: #666
+	opacity: 1
+
+*:-moz-placeholder
+	color: #666
+	opacity: 1
+
+*::-moz-placeholder
+	color: #666
+	opacity: 1
+
+*:-ms-input-placeholder
+	color: #666
+	opacity: 1
+
+body input:focus:required:invalid,
+body textarea:focus:required:invalid
+	color: #666
+body input:required:valid,
+body textarea:required:valid
+	color: #666
+
+html, body
+	height: 100%
+
 body
+	font-size: 16px
+	min-width: 320px
+	position: relative
+	line-height: 1.75
+	font-family: $default-font
 	overflow-x: hidden
-	margin: 0
-	padding: 0
-	background-color: purpure
+	opacity: 1
 
-*
-	box-sizing: border-box
 
-ul
-	margin: 0;
-	padding: 0
 
-ul 
-	li
-		list-style: none
-
-a
-	outline: none
-	text-decoration: none
-	color: #fff
-
-h1
-	font-size: 42px
-	line-height: 15px
-
-p
-	margin: 0
-	padding: 0
-	border-radius: 100%
-
-.uncss
-	margin: 100px
-	padding: 100px
-
-.watch
- margin-top: 10px
- font-size: 16px
- line-height: 15px
- font-weight: 500
-
-.fuck
- margin: 10px
- padding: 10px
-
-.bad
-	background-color: #FFF
-	font-family: Arial, sans-serif
+@import "media" // Always in the end

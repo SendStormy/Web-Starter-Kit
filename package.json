@@ -1,7 +1,7 @@
 {
-  "name": "web",
+  "name": "WebStarterKit",
   "version": "1.0.0",
-  "description": "",
+  "description": "Start HTML Template",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
