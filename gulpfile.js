@@ -54,7 +54,7 @@ gulp.task('compress', function() {
 gulp.task('css-libs', function() {
 	return gulp.src([ // Collecting Css libs
 			'app/libs/bootstrap/dist/css/bootstrap.min.css', // Add bootstrap
-			'app/css', // Second lib css
+			'app/libs/font-awesome/css/font-awesome.css', // Add font awesome
 		])
 	.pipe(concat('libs.min.css')) // Collecting all Css libs in new file libs.min.css
 	.pipe(minifyCSS('')) // Compressing Css
