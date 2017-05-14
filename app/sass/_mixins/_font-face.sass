@@ -1,3 +1,4 @@
+// Fonts mixin
 @mixin font-face($font-family, $file-path, $weight: normal, $style: normal, $asset-pipeline: false )
 	@font-face
 		font-family: $font-family
@@ -10,3 +11,8 @@
 		@else
 			src: url('#{$file-path}.eot')
 			src: url('#{$file-path}.eot?#iefix') format('embedded-opentype'), url('#{$file-path}.woff') format('woff'), url('#{$file-path}.ttf') format('truetype')
+
+// Preloader
+@mixin opacity($opacity)
+	opacity: $opacity / 100
+	filter: alpha(opacity=$opacity)

@@ -2,6 +2,7 @@
 @import "libs"
 @import "vars"
 
+// Global Styles
 *::-webkit-input-placeholder
 	color: #666
 	opacity: 1
@@ -37,6 +38,50 @@ body
 	overflow-x: hidden
 	opacity: 1
 
+// Preloader
+.preloader
+	position: fixed
+	top: 0
+	left: 0
+	right: 0
+	bottom: 0
+	z-index: 100
+	background-color: black
+	.pulse
+		position: relative
+		left: 50%
+		top: 50vh
+		margin:
+			left: -40px
+			top: -40px
+		&::before, &::after
+			content: ''
+			border: 5px solid #6A1B9A
+			width: 80px
+			height: 80px
+			border-radius: 500px
+			position: absolute
+		&::before
+			animation: pulse-outer .8s ease-in infinite
+		&::after
+			animation: pulse-inner .8s linear infinite
 
+@keyframes pulse-outer
+	0%
+		@include opacity(100)	
+	50%
+		@include opacity(50)	
+	100%
+		@include opacity(0)
+
+@keyframes pulse-inner
+	0%
+		@include opacity(0)
+		transform: scale(0)
+	100%
+		@include opacity(100)
+		transform: scale(1)
+
+// Main Styles
 
 @import "media" // Always in the end

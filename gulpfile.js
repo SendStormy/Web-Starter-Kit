@@ -36,7 +36,6 @@ gulp.task('scripts', function() {
 	return gulp.src([ // Collecting Js all libs
 			'app/libs/jquery/dist/jquery.min.js', // Jquery
 			'app/libs/bootstrap/dist/js/bootstrap.min.js', // Bootstrap Js
-			'app/libs/html5shiv/html5shiv.min.js', // html5shiv
 		])
 	.pipe(concat('libs.min.js')) // Collecting all Js libs in new file libs.min.js
 	.pipe(uglify()) // Minimize Js
@@ -129,6 +128,9 @@ gulp.task('build', ['clean', 'imgmin', 'htmlmin'], function() {
 			'app/js/common.min.js' // Custom Js
 		]) // Transfering all Js into dist folder
 		.pipe(gulp.dest('dist/js')) // Pipe for dest
+
+	var buildhtaccess = gulp.src('app/.htaccess') // Transfering ht.access into dist folder
+		.pipe(gulp.dest('dist'))
 });
 
 // Clean cache
