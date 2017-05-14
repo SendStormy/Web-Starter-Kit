@@ -1,0 +1,22 @@
+{
+  "name": "WebStarterKit",
+  "description": "Start HTML Template",
+  "main": "gulpfile.js",
+  "authors": [
+    "Polovinchenko Dmitry"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/SendStormy/Web-Starter-Kit",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/libs/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "^4.7.0",
+    "bootstrap": "^3.3.7"
+  }
+}
